@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BundleHack
   class GemCloner
     def initialize(gem, root_path)
@@ -7,7 +9,6 @@ module BundleHack
 
     def clone
       hack_dir = @root_path.join(HACK_DIR)
-      target_dir = hack_dir.join(@gem.name)
 
       FileUtils.mkdir_p(hack_dir)
       # Sadly there is no `FileUtils.cp_R` so we copy and rename instead
@@ -16,4 +17,3 @@ module BundleHack
     end
   end
 end
-

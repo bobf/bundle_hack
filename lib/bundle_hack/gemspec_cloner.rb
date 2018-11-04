@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BundleHack
   class GemspecCloner
     def initialize(gem, root_path, options = {})

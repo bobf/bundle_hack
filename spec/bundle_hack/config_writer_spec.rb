@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe BundleHack::ConfigWriter do
   let(:dummy_path) { BundleHack.root.join('spec', 'dummy') }
   let(:config_path) { dummy_path.join('.bundle', 'config') }

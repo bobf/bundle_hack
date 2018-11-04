@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BundleHack
   class GemfileParser
     def initialize(gemfile)
@@ -27,7 +29,6 @@ module BundleHack
 
     def group_gems
       parsed_gemfile.children.map do |child|
-        sexp_array = child.to_sexp_array
         next unless group?(child)
 
         gem_sexps_from_children(child.children[2..-1])

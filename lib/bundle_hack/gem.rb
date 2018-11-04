@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BundleHack
   class Gem
     attr_reader :name, :full_name, :version, :path

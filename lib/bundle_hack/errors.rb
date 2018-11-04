@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BundleHack
   class BundleHackError < StandardError; end
   class MissingGemError < BundleHackError; end

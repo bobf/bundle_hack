@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe BundleHack::GemLocator do
   let(:dummy_app_path) { BundleHack.root.join('spec', 'dummy') }
   let(:gemfile_path) { dummy_app_path.join('Gemfile') }

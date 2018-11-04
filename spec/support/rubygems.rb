@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RubyGemsHelper
   def stub_rubygems
     # `specs.4.8.gz` has been manually unpacked from the original version (i.e.

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 RSpec.describe BundleHack::GemspecCloner do
   include RubyGemsHelper
   let(:gem) do
     BundleHack::Gem.new(
       full_name: 'dummy_gem-1.0.0',
-      path:  BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0'),
+      path: BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0'),
       name: 'dummy_gem',
       version: '1.0.0'
     )
@@ -36,7 +38,11 @@ RSpec.describe BundleHack::GemspecCloner do
 
     it 'creates a valid .gemspec file' do
       clone
+      # rubocop:disable Security/Eval
+      # TODO: We need to be sure we generate valid Ruby so we use `eval` but,
+      # since we already have `parser` loaded, we could use that ?
       expect(eval(File.read(gemspec_path))).to be_a Gem::Specification
+      # rubocop:enable Security/Eval
     end
 
     # TODO: Refactor these specs into
@@ -55,7 +61,9 @@ RSpec.describe BundleHack::GemspecCloner do
 
       it 'uses source-provided gemspec' do
         clone
+        # rubocop:disable Security/Eval
         expect(eval(File.read(gemspec_path))).to be_a Gem::Specification
+        # rubocop:enable Security/Eval
       end
     end
 
@@ -72,7 +80,9 @@ RSpec.describe BundleHack::GemspecCloner do
 
       it 'fetches gem spec from cache' do
         clone
+        # rubocop:disable Security/Eval
         expect(eval(File.read(gemspec_path))).to be_a Gem::Specification
+        # rubocop:enable Security/Eval
       end
     end
 
@@ -80,7 +90,7 @@ RSpec.describe BundleHack::GemspecCloner do
       let(:gem) do
         BundleHack::Gem.new(
           full_name: 'unknown_gem-1.0.0',
-          path:  '/unknown/gem/path',
+          path: '/unknown/gem/path',
           name: 'unknown_gem',
           version: '1.0.0'
         )
@@ -88,7 +98,7 @@ RSpec.describe BundleHack::GemspecCloner do
 
       subject { proc { clone } }
 
-      it { is_expected.to raise_error(BundleHack::MissingSpecError ) }
+      it { is_expected.to raise_error(BundleHack::MissingSpecError) }
     end
   end
 end

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 RSpec.describe BundleHack::GemCloner do
   let(:root_path) { BundleHack.root.join('spec', 'dummy') }
   let(:gem) do
     BundleHack::Gem.new(
       full_name: 'dummy_gem-1.0.0',
-      path:  BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0'),
+      path: BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0'),
       name: 'dummy_gem',
       version: '1.0.0'
     )

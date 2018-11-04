@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BundleHack
   class Sandbox
     def initialize(gem_name, gemfile_path = nil)

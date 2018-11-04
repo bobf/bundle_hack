@@ -1,4 +1,3 @@
-# Don't require top-level comment for all modules and classes
 Style/Documentation:
   Enabled: false
 
@@ -6,8 +5,8 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
-# We don't care about the auto-generated dummy Rails app
 AllCops:
   Exclude:
     - 'bin/**/*'
-    - 'db/schema.rb'
+    - 'spec/dummy/**/*'
+    - 'spec/fixtures/**/*'

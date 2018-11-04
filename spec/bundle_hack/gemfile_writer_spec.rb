@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe BundleHack::GemfileWriter do
   let(:dummy_path) { BundleHack.root.join('spec', 'dummy') }
   let(:gemfile_path) { BundleHack.root.join('spec', 'fixtures', 'Gemfile') }

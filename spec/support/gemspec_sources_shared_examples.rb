@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples 'a gemspec source' do
   let(:gem) do
     BundleHack::Gem.new(

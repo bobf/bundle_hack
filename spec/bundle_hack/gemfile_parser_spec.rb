@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe BundleHack::GemfileParser do
   let(:gemfile) do
     File.open(BundleHack.root.join('spec', 'fixtures', 'Gemfile'))

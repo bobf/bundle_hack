@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe BundleHack::Gem do
   let(:version) { '1.0.0' }
 

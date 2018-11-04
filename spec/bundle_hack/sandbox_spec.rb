@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fileutils'
 
 RSpec.describe BundleHack::Sandbox do

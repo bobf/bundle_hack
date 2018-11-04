@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BundleHack
   class ConfigWriter
     def initialize(root_path)
@@ -7,6 +9,7 @@ module BundleHack
 
     def create_or_update
       return create_config unless File.exist?(@config_path)
+
       update_config
     end
 
@@ -30,6 +33,5 @@ module BundleHack
         'BUNDLE_GEMFILE' => GEMFILE
       }
     end
-
   end
 end

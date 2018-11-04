@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BundleHack
   class GemLocator
     def initialize(gemfile_path, gemfile_lock_path)
@@ -6,7 +8,7 @@ module BundleHack
     end
 
     def locate(gem_name)
-      gem = gems.find { |gem| gem[:name] == gem_name }
+      gem = gems.find { |spec| spec[:name] == gem_name }
       missing_gem_error(gem_name) if gem.nil?
 
       BundleHack::Gem.new(gem)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BundleHack
   class GemfileWriter
     def initialize(root_path, gemfile_path, options = {})
@@ -22,6 +24,7 @@ module BundleHack
     def commented_gemfile
       File.readlines(@gemfile_path).to_enum.with_index(1).map do |line, index|
         next line.chomp unless @comment_lines.include?(index)
+
         "# #{line.chomp} # managed by BundleHack"
       end.join("\n")
     end

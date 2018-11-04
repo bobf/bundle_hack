@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module BundleHack
   module GemspecSources
@@ -10,7 +11,9 @@ module BundleHack
         path = cache_file_path
         return nil if path.nil?
 
+        # rubocop:disable Security/MarshalLoad
         Marshal.load(File.read(cache_file_path)).to_ruby
+        # rubocop:enable Security/MarshalLoad
       end
 
       private
@@ -25,10 +28,10 @@ module BundleHack
       end
 
       def cache_dirs
-       Dir.entries(base_dir)
-        .select { |path| File.directory?(quick_cache(path)) }
-        .reject { |path| %w[. ..].include?(path) }
-        .map { |path| quick_cache(path) }
+        Dir.entries(base_dir)
+           .select { |path| File.directory?(quick_cache(path)) }
+           .reject { |path| %w[. ..].include?(path) }
+           .map { |path| quick_cache(path) }
       end
 
       def quick_cache(path)
