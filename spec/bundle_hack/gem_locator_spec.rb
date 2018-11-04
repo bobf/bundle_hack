@@ -15,10 +15,10 @@ RSpec.describe BundleHack::GemLocator do
     context '(Gemfile) gem: dummy_gem (source: rubygems)' do
       let(:gem_name) { 'dummy_gem' }
 
-      its([:path]) { is_expected.to end_with 'gems/dummy_gem-1.0.0' }
-      its([:name]) { is_expected.to eql 'dummy_gem' }
-      its([:full_name]) { is_expected.to eql 'dummy_gem-1.0.0' }
-      its([:version]) { is_expected.to eql '1.0.0' }
+      its('path.to_s') { is_expected.to end_with 'gems/dummy_gem-1.0.0' }
+      its(:name) { is_expected.to eql 'dummy_gem' }
+      its(:full_name) { is_expected.to eql 'dummy_gem-1.0.0' }
+      its(:version) { is_expected.to eql '1.0.0' }
     end
 
     context '(Gemfile) gem: another_dummy_gem (source: git)' do
@@ -27,19 +27,19 @@ RSpec.describe BundleHack::GemLocator do
       # in spec/dummy/Gemfile.lock so this isn't as bad as it looks:
       let(:gem_dir) { 'another_dummy_gem-ed0e5d21f1ff' }
 
-      its([:path]) { is_expected.to end_with "gems/#{gem_dir}" }
-      its([:name]) { is_expected.to eql 'another_dummy_gem' }
-      its([:full_name]) { is_expected.to eql 'another_dummy_gem-1.0.0' }
-      its([:version]) { is_expected.to eql '1.0.0' }
+      its('path.to_s') { is_expected.to end_with "gems/#{gem_dir}" }
+      its(:name) { is_expected.to eql 'another_dummy_gem' }
+      its(:full_name) { is_expected.to eql 'another_dummy_gem-1.0.0' }
+      its(:version) { is_expected.to eql '1.0.0' }
     end
 
     context '(gemspec) gem: noop (source: rubygems)' do
       let(:gem_name) { 'noop' }
 
-      its([:path]) { is_expected.to end_with 'gems/noop-0.0.2' }
-      its([:name]) { is_expected.to eql 'noop' }
-      its([:full_name]) { is_expected.to eql 'noop-0.0.2' }
-      its([:version]) { is_expected.to eql '0.0.2' }
+      its('path.to_s') { is_expected.to end_with 'gems/noop-0.0.2' }
+      its(:name) { is_expected.to eql 'noop' }
+      its(:full_name) { is_expected.to eql 'noop-0.0.2' }
+      its(:version) { is_expected.to eql '0.0.2' }
     end
   end
 end

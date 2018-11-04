@@ -1,14 +1,12 @@
 RSpec.describe BundleHack::GemCloner do
   let(:root_path) { BundleHack.root.join('spec', 'dummy') }
-  let(:gem_name) { 'dummy_gem' }
-  let(:gem_full_name) { 'dummy_gem-1.0.0' }
-  let(:gem_path) { BundleHack.root.join('spec', 'fixtures', gem_full_name) }
   let(:gem) do
-    {
-      full_name: gem_full_name,
-      path: gem_path,
-      name: gem_name
-    }
+    BundleHack::Gem.new(
+      full_name: 'dummy_gem-1.0.0',
+      path:  BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0'),
+      name: 'dummy_gem',
+      version: '1.0.0'
+    )
   end
 
   subject(:gem_cloner) { described_class.new(gem, root_path) }
