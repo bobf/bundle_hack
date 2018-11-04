@@ -35,6 +35,7 @@ module BundleHack
 
     def hacked_gem_definitions
       @hacked_gems.map do |gem_name|
+        # TODO: Retain original non-path (:git, :path) parameters
         "gem '#{gem_name}', path: 'hack/#{gem_name}'"
       end.join("\n")
     end

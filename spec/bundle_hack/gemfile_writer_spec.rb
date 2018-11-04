@@ -31,7 +31,7 @@ RSpec.describe BundleHack::GemfileWriter do
       create
       expect(
         File.read(hacked_gemfile_path)
-      ).to include "gem 'dummy_gem', path: 'hack/dummy_gem'"
+      ).to include "gem 'dummy_gem', path: '#{BundleHack::HACK_DIR}/dummy_gem'"
     end
   end
 end

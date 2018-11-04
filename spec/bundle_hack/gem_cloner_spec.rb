@@ -18,13 +18,14 @@ RSpec.describe BundleHack::GemCloner do
   describe '#clone' do
     subject(:clone) { gem_cloner.clone }
 
-    before { FileUtils.rm_rf(root_path.join('hack')) }
+    before { FileUtils.rm_rf(root_path.join(BundleHack::HACK_DIR)) }
 
     it 'copies versioned gem to an unversioned location in hack directory' do
       clone
-      expect(
-        File.exist?(root_path.join('hack', 'dummy_gem', 'lib', 'dummy_gem.rb'))
-      ).to be true
+      expected_file_path = root_path.join(
+        BundleHack::HACK_DIR, 'dummy_gem', 'lib', 'dummy_gem.rb'
+      )
+      expect(File.exist?(expected_file_path)).to be true
     end
   end
 end

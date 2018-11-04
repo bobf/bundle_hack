@@ -4,7 +4,6 @@ module BundleHack
       @gem_name = gem.fetch(:name)
       @gem_path = gem.fetch(:path)
       @gem_full_name = gem.fetch(:full_name)
-
       @root_path = root_path
     end
 

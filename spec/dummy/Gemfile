@@ -3,3 +3,4 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'dummy_gem', '1.0.0'
+gem 'another_dummy_gem', git: 'https://github.com/bobf/another_dummy_gem'

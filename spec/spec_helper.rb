@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+require 'zlib'
+
 require 'bundler/setup'
 require 'bundle_hack'
 require 'rspec/its'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -15,3 +18,5 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+Dir[BundleHack.root.join('spec/support/**/*.rb')].each { |f| require f }

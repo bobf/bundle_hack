@@ -13,6 +13,7 @@ require 'bundle_hack/gem_cloner'
 require 'bundle_hack/gem_locator'
 require 'bundle_hack/gemfile_parser'
 require 'bundle_hack/gemfile_writer'
+require 'bundle_hack/gemspec_cloner'
 require 'bundle_hack/sandbox'
 require 'bundle_hack/version'
 

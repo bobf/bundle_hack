@@ -31,6 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-its', '~> 1.2'
   spec.add_development_dependency 'rubocop', '~> 0.60.0'
-  spec.add_development_dependency 'dummy_gem', '1.0.0'
-  spec.add_development_dependency 'noop', '0.0.2'
+  spec.add_development_dependency 'webmock', '~> 3.4'
 end

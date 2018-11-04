@@ -1,6 +1,8 @@
 require 'fileutils'
 
 RSpec.describe BundleHack::Sandbox do
+  include RubyGemsHelper
+
   let(:gem_name) { 'dummy_gem' }
   let(:dummy_path) { BundleHack.root.join('spec', 'dummy') }
   let(:gemfile_path) { dummy_path.join('Gemfile') }
@@ -14,7 +16,8 @@ RSpec.describe BundleHack::Sandbox do
 
     before do
       FileUtils.rm_rf(dummy_path.join('.bundle'))
-      FileUtils.rm_rf(dummy_path.join('hack'))
+      FileUtils.rm_rf(dummy_path.join(BundleHack::HACK_DIR))
+      stub_rubygems
     end
 
     it 'raises an error if requested gem is not in Gemfile' do
@@ -36,7 +39,16 @@ RSpec.describe BundleHack::Sandbox do
 
     it 'creates copy of target gem under hack/<gem_name>' do
       build
-      expect(File.exist?(dummy_path.join('hack', 'dummy_gem'))).to be true
+      expected_file_path = dummy_path.join(BundleHack::HACK_DIR, 'dummy_gem')
+      expect(File.exist?(expected_file_path)).to be true
+    end
+
+    it 'creates .gemspec for target gem' do
+      build
+      expected_file_path = dummy_path.join(
+        BundleHack::HACK_DIR, 'dummy_gem', 'dummy_gem.gemspec'
+      )
+      expect(File.exist?(expected_file_path)).to be true
     end
   end
 end

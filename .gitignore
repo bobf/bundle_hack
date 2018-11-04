@@ -18,3 +18,4 @@ Gemfile.lock
 .byebug_history
 spec/dummy/Gemfile.hack
 spec/dummy/Gemfile.hack.lock
+spec/dummy/hack/dummy_gem/dummy_gem.gemspec

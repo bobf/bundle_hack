@@ -28,7 +28,8 @@ module BundleHack
       {
         name: spec.name,
         full_name: spec.full_name,
-        path: spec.full_gem_path
+        path: spec.full_gem_path,
+        version: spec_version(spec)
       }
     end
 
@@ -36,6 +37,12 @@ module BundleHack
       @bundler_specs ||= Bundler::Definition.build(
         @gemfile_path, @gemfile_lock_path, nil
       ).specs
+    end
+
+    def spec_version(spec)
+      # Ruby >= 2.3.0: `version_obj` is a `Gem::Version`
+      # Ruby < 2.3.0: `version_obj` is a `String`
+      spec.version.respond_to?(:version) ? spec.version.version : spec.version
     end
   end
 end

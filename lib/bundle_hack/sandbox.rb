@@ -13,6 +13,7 @@ module BundleHack
       ConfigWriter.new(@root_path).create_or_update
       GemfileWriter.new(@root_path, @gemfile_path, write_options(parser)).create
       GemCloner.new(gem, @root_path).clone
+      GemspecCloner.new(gem, @root_path).clone
     end
 
     private
