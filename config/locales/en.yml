@@ -1,0 +1,4 @@
+en:
+  errors:
+    missing_gem: "Requested gem '%{gem}' not found in Gemfile"
+    parsing: "Error parsing Gemfile: unable to locate '%{gem}'. Please file a bug report."

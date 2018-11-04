@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'dummy_gem', '1.0.0'
+
+group :development do
+  gem 'noop', '0.0.2'
+end
+
+group :production do
+  gem 'noop', '0.0.2'
+end

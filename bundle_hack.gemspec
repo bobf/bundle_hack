@@ -20,11 +20,17 @@ Gem::Specification.new do |spec|
     end
   end
   spec.bindir        = 'bin'
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.executables   = []
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.16'
+  spec.add_dependency 'i18n', '>= 0.5'
+  spec.add_dependency 'parser', '~> 2.5'
+
+  spec.add_development_dependency 'byebug', '~> 10.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '~> 0.59.2'
+  spec.add_development_dependency 'rspec-its', '~> 1.2'
+  spec.add_development_dependency 'rubocop', '~> 0.60.0'
+  spec.add_development_dependency 'dummy_gem', '1.0.0'
+  spec.add_development_dependency 'noop', '0.0.2'
 end
