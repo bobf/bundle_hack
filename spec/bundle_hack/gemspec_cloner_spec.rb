@@ -4,7 +4,8 @@ RSpec.describe BundleHack::GemspecCloner do
   let(:gem) do
     {
       name: 'dummy_gem',
-      version: '1.0.0'
+      version: '1.0.0',
+      path: BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0')
     }
   end
 
@@ -34,6 +35,23 @@ RSpec.describe BundleHack::GemspecCloner do
     it 'creates a valid .gemspec file' do
       clone
       expect(eval(File.read(gemspec_path))).to be_a Gem::Specification
+    end
+
+    context 'git source' do
+      let(:gem) do
+        {
+          name: 'another_dummy_gem',
+          version: '1.0.0',
+          path: BundleHack.root.join(
+            'spec', 'fixtures', 'another_dummy_gem-ed0e5d21f1ff'
+          )
+        }
+      end
+
+      it 'uses source-provided gemspec' do
+        clone
+        expect(eval(File.read(gemspec_path))).to be_a Gem::Specification
+      end
     end
   end
 end
