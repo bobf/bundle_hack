@@ -23,4 +23,20 @@ RSpec.describe BundleHack::Gem do
 
     its(:version) { is_expected.to eql '1.0.0' }
   end
+
+  describe '#update' do
+    subject(:update) { gem.update }
+
+    it { is_expected.to be gem }
+
+    it 'updates #locations' do
+      gem.update(locations: [1])
+      expect(gem.locations).to eql [1]
+    end
+
+    it 'updates #params' do
+      gem.update(params: { require: false })
+      expect(gem.params).to eql(require: false)
+    end
+  end
 end

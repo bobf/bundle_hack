@@ -10,3 +10,4 @@ AllCops:
     - 'bin/**/*'
     - 'spec/dummy/**/*'
     - 'spec/fixtures/**/*'
+    - 'config/header.rb'

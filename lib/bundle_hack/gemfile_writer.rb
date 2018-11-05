@@ -2,11 +2,10 @@
 
 module BundleHack
   class GemfileWriter
-    def initialize(root_path, gemfile_path, options = {})
+    def initialize(root_path, gemfile_path, gems)
       @root_path = root_path
       @gemfile_path = gemfile_path
-      @comment_lines = options.fetch(:comment_lines)
-      @hacked_gems = options.fetch(:hacked_gems)
+      @hacked_gems = gems
       @hacked_gemfile_path = @root_path.join(GEMFILE)
     end
 
@@ -23,7 +22,7 @@ module BundleHack
 
     def commented_gemfile
       File.readlines(@gemfile_path).to_enum.with_index(1).map do |line, index|
-        next line.chomp unless @comment_lines.include?(index)
+        next line.chomp unless comment_lines.include?(index)
 
         "# #{line.chomp} # managed by BundleHack"
       end.join("\n")
@@ -37,14 +36,18 @@ module BundleHack
     end
 
     def hacked_gem_definitions
-      @hacked_gems.map do |gem_name|
+      @hacked_gems.map do |gem|
         # TODO: Retain original non-path (:git, :path) parameters
-        "gem '#{gem_name}', path: 'hack/#{gem_name}'"
+        "gem '#{gem.name}', path: 'hack/#{gem.name}'"
       end.join("\n")
     end
 
     def header
       File.read(BundleHack.root.join('config', 'header.rb'))
+    end
+
+    def comment_lines
+      @hacked_gems.map(&:locations).flatten
     end
   end
 end

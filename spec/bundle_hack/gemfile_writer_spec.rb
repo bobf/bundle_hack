@@ -3,10 +3,19 @@
 RSpec.describe BundleHack::GemfileWriter do
   let(:dummy_path) { BundleHack.root.join('spec', 'dummy') }
   let(:gemfile_path) { BundleHack.root.join('spec', 'fixtures', 'Gemfile') }
-  let(:options) { { comment_lines: [3], hacked_gems: ['dummy_gem'] } }
+  let(:gem) do
+    BundleHack::Gem.new(
+      name: 'dummy_gem',
+      version: '1.0.0',
+      path: BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0'),
+      full_name: 'dummy_gem-1.0.0'
+    )
+  end
+
+  let(:gems) { [gem.update(locations: [3])] }
 
   subject(:gemfile_writer) do
-    described_class.new(dummy_path, gemfile_path, options)
+    described_class.new(dummy_path, gemfile_path, gems)
   end
 
   it { is_expected.to be_a described_class }
@@ -27,6 +36,13 @@ RSpec.describe BundleHack::GemfileWriter do
     it 'comments existing versions of gems' do
       create
       expect(File.read(hacked_gemfile_path)).to include "# gem 'dummy_gem'"
+    end
+
+    it 'includes hash params passed to original gem definitions' do
+      create
+      expect(
+        File.read(hacked_gemfile_path)
+      ).to match(/# gem 'dummy_gem'.*:require => false/)
     end
 
     it 'appends hacked versions of gem' do

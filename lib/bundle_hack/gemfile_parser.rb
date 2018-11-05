@@ -6,8 +6,8 @@ module BundleHack
       @gemfile = gemfile
     end
 
-    def line_numbers_for(gem_name)
-      locations(by_name(gem_name))
+    def definition_for(gem_name)
+      definition(by_name(gem_name))
     end
 
     private
@@ -54,8 +54,20 @@ module BundleHack
       end
     end
 
+    def definition(sexps)
+      {
+        locations: locations(sexps),
+        params: params(sexps)
+      }
+    end
+
     def locations(sexps)
       sexps.map { |sexp| sexp.location.line }
+    end
+
+    def params(sexps)
+      # TODO: Get pertinent hash params from originial definition
+      sexps.map { |sexp| sexp }
     end
 
     def parsing_error(gem_name)

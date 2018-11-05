@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'dummy_gem', '1.0.0'
+gem 'dummy_gem', '1.0.0', require: false
 
 group :development do
   gem 'noop', '0.0.2'

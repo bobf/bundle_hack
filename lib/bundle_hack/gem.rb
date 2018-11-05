@@ -2,13 +2,20 @@
 
 module BundleHack
   class Gem
-    attr_reader :name, :full_name, :version, :path
+    attr_reader :name, :full_name, :version, :path, :locations, :params
 
     def initialize(options = {})
       @name = options.fetch(:name)
       @full_name = options.fetch(:full_name)
       @version = normalized_version(options.fetch(:version))
       @path = Pathname.new(options.fetch(:path))
+    end
+
+    def update(options = {})
+      @locations = options[:locations] if options.key?(:locations)
+      @params = options[:params] if options.key?(:params)
+
+      self
     end
 
     private
