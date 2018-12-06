@@ -28,7 +28,7 @@ module BundleHack
 
     def top_level_gems
       gem_sexps_from_children(parsed_gemfile.children).map do |sexp|
-        { group: nil, sexp: sexp }
+        { groups: nil, sexp: sexp }
       end
     end
 
@@ -36,11 +36,17 @@ module BundleHack
       parsed_gemfile.children.map do |child|
         next unless group?(child)
 
-        group = child.to_sexp_array[1].last.last
         gem_sexps_from_children(child.children[2..-1]).map do |sexp|
-          { group: group, sexp: sexp }
+          { groups: group_names(child.to_sexp_array), sexp: sexp }
         end
       end.compact.flatten(1)
+    end
+
+    def group_names(sexp_array)
+      # sexp_array[1] looks like:
+      # [:send, nil, :group, [:sym, :development], [:sym, :test]]
+      _send, _, _group, *group_pairs = sexp_array[1]
+      group_pairs.map { |_sym, group| group }
     end
 
     def group?(sexp)
@@ -65,7 +71,7 @@ module BundleHack
     def definitions(gems)
       gems.map do |gem|
         {
-          group: gem[:group],
+          groups: gem[:groups],
           locations: location(gem[:sexp]),
           params: hash_params(gem[:sexp])
         }

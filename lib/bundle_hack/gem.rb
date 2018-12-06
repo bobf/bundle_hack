@@ -39,13 +39,13 @@ module BundleHack
 
     def primary_definition
       @definitions.reverse_each.find do |definition|
-        definition.fetch(:group).nil?
+        definition.fetch(:groups).nil?
       end
     end
 
     def development_definition
       @definitions.reverse_each.find do |definition|
-        definition.fetch(:group) == :development
+        definition.fetch(:groups).include?(:development)
       end
     end
 

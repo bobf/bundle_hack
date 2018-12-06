@@ -44,5 +44,16 @@ RSpec.describe BundleHack::GemfileParser do
         is_expected.to eql 'https://github.com/bobf/another_dummy_gem'
       end
     end
+
+    describe '[:groups]' do
+      subject(:groups) { definitions.first[:groups] }
+      let(:gem_name) { 'noop' }
+      it { is_expected.to eql [:development] }
+
+      context 'multiple groups' do
+        let(:gem_name) { 'multigroup' }
+        it { is_expected.to eql %i[development test] }
+      end
+    end
   end
 end

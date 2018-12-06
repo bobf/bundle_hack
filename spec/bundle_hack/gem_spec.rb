@@ -37,8 +37,8 @@ RSpec.describe BundleHack::Gem do
       subject(:params) { gem.params }
       let(:definitions) do
         [
-          { group: nil, params: { a: 1 } },
-          { group: :development, params: { b: 1 } }
+          { groups: nil, params: { a: 1 } },
+          { groups: [:development], params: { b: 1 } }
         ]
       end
 
@@ -49,8 +49,8 @@ RSpec.describe BundleHack::Gem do
       subject(:params) { gem.params }
       let(:definitions) do
         [
-          { group: :development, params: { a: 1 } },
-          { group: :test, params: { b: 1 } }
+          { groups: [:development], params: { a: 1 } },
+          { groups: [:test], params: { b: 1 } }
         ]
       end
 
@@ -61,8 +61,8 @@ RSpec.describe BundleHack::Gem do
       subject(:params) { gem.params }
       let(:definitions) do
         [
-          { group: :test, params: { b: 1 } },
-          { group: :production, params: { a: 1 } }
+          { groups: [:test], params: { b: 1 } },
+          { groups: [:production], params: { a: 1 } }
         ]
       end
 
