@@ -8,25 +8,41 @@ RSpec.describe BundleHack::GemfileParser do
   subject(:gemfile_parser) { described_class.new(gemfile) }
   it { is_expected.to be_a described_class }
 
-  describe '#definition_for' do
-    subject(:definition_for) { gemfile_parser.definition_for(gem_name) }
+  describe '#definitions_for' do
+    subject(:definitions) { gemfile_parser.definitions_for(gem_name) }
 
-    context 'gem: dummy_gem' do
-      let(:gem_name) { 'dummy_gem' }
-      let(:path) { '/path/to/dummy_gem' }
-      its([:locations]) { is_expected.to eql [3] }
-    end
-
-    context 'gem: noop' do
-      let(:gem_name) { 'noop' }
-      let(:path) { '/path/to/noop' }
-      its([:locations]) { is_expected.to eql [6, 10] }
-    end
-
-    context 'gem: non_existent' do
+    context 'undefined gem' do
       let(:gem_name) { 'non_existent' }
-      subject { proc { definition_for } }
+      subject { proc { definitions } }
       it { is_expected.to raise_error BundleHack::ParsingError }
+    end
+
+    describe '[:locations]' do
+      subject(:locations) do
+        definitions.map { |definition| definition[:locations] }.flatten
+      end
+
+      context 'gem: dummy_gem' do
+        let(:gem_name) { 'dummy_gem' }
+        it { is_expected.to eql [3, 4, 5] }
+      end
+
+      context 'gem: noop' do
+        let(:gem_name) { 'noop' }
+        it { is_expected.to eql [8, 12] }
+      end
+    end
+
+    describe '[:params]' do
+      subject(:params) { definitions.first[:params] }
+
+      let(:gem_name) { 'dummy_gem' }
+
+      its([:require]) { is_expected.to eql false }
+      its([:platforms]) { is_expected.to eql %i[mri mingw] }
+      its([:git]) do
+        is_expected.to eql 'https://github.com/bobf/another_dummy_gem'
+      end
     end
   end
 end

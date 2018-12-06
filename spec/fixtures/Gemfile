@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'dummy_gem', '1.0.0', require: false
+gem 'dummy_gem', '1.0.0', require: false,
+                          platforms: [:mri, :mingw],
+                          git: 'https://github.com/bobf/another_dummy_gem'
 
 group :development do
   gem 'noop', '0.0.2'

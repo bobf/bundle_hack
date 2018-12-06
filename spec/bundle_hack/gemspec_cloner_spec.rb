@@ -3,7 +3,8 @@
 RSpec.describe BundleHack::GemspecCloner do
   include RubyGemsHelper
   let(:gem) do
-    BundleHack::Gem.new(
+    instance_double(
+      BundleHack::Gem,
       full_name: 'dummy_gem-1.0.0',
       path: BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0'),
       name: 'dummy_gem',
@@ -49,7 +50,8 @@ RSpec.describe BundleHack::GemspecCloner do
     # spec/support/gemspec_sources_shared_examples.rb
     context 'git source' do
       let(:gem) do
-        BundleHack::Gem.new(
+        instance_double(
+          BundleHack::Gem,
           name: 'another_dummy_gem',
           version: '1.0.0',
           path: BundleHack.root.join(
@@ -88,9 +90,10 @@ RSpec.describe BundleHack::GemspecCloner do
 
     context 'unknown gem' do
       let(:gem) do
-        BundleHack::Gem.new(
+        instance_double(
+          BundleHack::Gem,
           full_name: 'unknown_gem-1.0.0',
-          path: '/unknown/gem/path',
+          path: Pathname.new('/unknown/gem/path'),
           name: 'unknown_gem',
           version: '1.0.0'
         )

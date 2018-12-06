@@ -2,6 +2,8 @@
 
 module BundleHack
   class GemfileWriter
+    FILTERED_PARAMS = %i[git path].freeze
+
     def initialize(root_path, gemfile_path, gems)
       @root_path = root_path
       @gemfile_path = gemfile_path
@@ -37,8 +39,8 @@ module BundleHack
 
     def hacked_gem_definitions
       @hacked_gems.map do |gem|
-        # TODO: Retain original non-path (:git, :path) parameters
-        "gem '#{gem.name}', path: 'hack/#{gem.name}'"
+        params = filtered_params(gem.params).merge(path: "hack/#{gem.name}")
+        "gem '#{gem.name}', #{params.inspect}"
       end.join("\n")
     end
 
@@ -48,6 +50,10 @@ module BundleHack
 
     def comment_lines
       @hacked_gems.map(&:locations).flatten
+    end
+
+    def filtered_params(params)
+      params.reject { |key, _value| FILTERED_PARAMS.include?(key) }
     end
   end
 end

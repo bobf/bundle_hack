@@ -1,0 +1,3 @@
+# gem 'dummy_gem', '1.0.0', require: false, # managed by BundleHack
+#                           platforms: [:mri, :mingw], # managed by BundleHack
+#                           git: 'https://github.com/bobf/another_dummy_gem' # managed by BundleHack

@@ -32,9 +32,13 @@ The gem is copied to `hack/rake/` (relative to the same directory as your `Gemfi
 
 When you're done, you can restore a specific gem:
 
+# TODO:
+
 ``` bash
 $ bundle hack:restore rake
 ```
+
+# TODO:
 
 Or restore all hacked gems:
 ```

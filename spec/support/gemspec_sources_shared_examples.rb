@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples 'a gemspec source' do
+  subject(:source) { described_class.new(gem) }
+
+  let(:definitions) { [{ group: nil, locations: [1, 2, 3], params: nil }] }
   let(:gem) do
     BundleHack::Gem.new(
+      definitions,
       name: 'dummy_gem',
       version: '1.0.0',
       path: BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0'),
       full_name: 'dummy_gem-1.0.0'
     )
   end
-
-  subject(:source) { described_class.new(gem) }
 
   it { is_expected.to be_a described_class }
 

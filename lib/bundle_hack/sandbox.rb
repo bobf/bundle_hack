@@ -28,9 +28,9 @@ module BundleHack
     end
 
     def locate_gem(gem_name, parser)
-      GemLocator.new(@gemfile_path, @gemfile_lock_path)
-                .locate(gem_name)
-                .update(parser.definition_for(gem_name))
+      spec = GemLocator.new(@gemfile_path, @gemfile_lock_path)
+                       .locate(gem_name)
+      Gem.new(parser.definitions_for(gem_name), spec)
     end
 
     def lock_path(gemfile_path)

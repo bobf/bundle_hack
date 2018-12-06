@@ -3,3 +3,4 @@ en:
     missing_gem: "Requested gem '%{gem}' not found in Gemfile"
     missing_spec: "Unable to locate .gemspec for '%{gem}'"
     parsing: "Error parsing Gemfile: unable to locate '%{gem}'. Please file a bug report."
+    type: "Unknown type: %{type}"

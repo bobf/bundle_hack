@@ -11,7 +11,7 @@ module BundleHack
       gem = gems.find { |spec| spec[:name] == gem_name }
       missing_gem_error(gem_name) if gem.nil?
 
-      BundleHack::Gem.new(gem)
+      gem
     end
 
     private

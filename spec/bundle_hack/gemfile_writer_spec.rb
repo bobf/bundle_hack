@@ -1,21 +1,22 @@
 # frozen_string_literal: true
 
 RSpec.describe BundleHack::GemfileWriter do
+  subject(:gemfile_writer) do
+    described_class.new(dummy_path, gemfile_path, [gem])
+  end
+
   let(:dummy_path) { BundleHack.root.join('spec', 'dummy') }
   let(:gemfile_path) { BundleHack.root.join('spec', 'fixtures', 'Gemfile') }
   let(:gem) do
-    BundleHack::Gem.new(
+    instance_double(
+      BundleHack::Gem,
       name: 'dummy_gem',
       version: '1.0.0',
       path: BundleHack.root.join('spec', 'fixtures', 'dummy_gem-1.0.0'),
-      full_name: 'dummy_gem-1.0.0'
+      full_name: 'dummy_gem-1.0.0',
+      locations: [3, 4, 5],
+      params: { require: false, git: 'https://example.com/repo.git' }
     )
-  end
-
-  let(:gems) { [gem.update(locations: [3])] }
-
-  subject(:gemfile_writer) do
-    described_class.new(dummy_path, gemfile_path, gems)
   end
 
   it { is_expected.to be_a described_class }
@@ -33,23 +34,35 @@ RSpec.describe BundleHack::GemfileWriter do
       expect(File.exist?(dummy_path.join(BundleHack::GEMFILE))).to be true
     end
 
-    it 'comments existing versions of gems' do
+    it 'comments gems at given locations' do
       create
-      expect(File.read(hacked_gemfile_path)).to include "# gem 'dummy_gem'"
+      commented_gem = File.read(
+        BundleHack.root.join('spec', 'fixtures', 'commented_gem')
+      )
+      expect(File.read(hacked_gemfile_path)).to include(commented_gem)
     end
 
     it 'includes hash params passed to original gem definitions' do
       create
       expect(
         File.read(hacked_gemfile_path)
-      ).to match(/# gem 'dummy_gem'.*:require => false/)
+      ).to match(/^gem 'dummy_gem'.*:require=>false/)
+    end
+
+    it 'excludes path-based hash params passed to original gem definitions' do
+      create
+      expect(
+        File.read(hacked_gemfile_path)
+      ).to_not match(/^gem 'dummy_gem'.*:git/)
     end
 
     it 'appends hacked versions of gem' do
       create
       expect(
         File.read(hacked_gemfile_path)
-      ).to include "gem 'dummy_gem', path: '#{BundleHack::HACK_DIR}/dummy_gem'"
+      ).to match(
+        %r{^gem 'dummy_gem'.*:path=>"#{BundleHack::HACK_DIR}/dummy_gem"}
+      )
     end
   end
 end

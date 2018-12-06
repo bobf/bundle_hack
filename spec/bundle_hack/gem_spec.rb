@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 RSpec.describe BundleHack::Gem do
-  let(:version) { '1.0.0' }
-
   subject(:gem) do
     described_class.new(
+      definitions,
       name: 'dummy_gem',
       version: version,
       path: '/path/to/gem',
       full_name: 'dummy_gem-1.0.0'
     )
   end
+
+  let(:definitions) { [] }
+  let(:version) { '1.0.0' }
 
   its(:name) { is_expected.to eql 'dummy_gem' }
   its(:full_name) { is_expected.to eql 'dummy_gem-1.0.0' }
@@ -24,19 +26,47 @@ RSpec.describe BundleHack::Gem do
     its(:version) { is_expected.to eql '1.0.0' }
   end
 
-  describe '#update' do
-    subject(:update) { gem.update }
+  describe '#locations' do
+    subject(:locations) { gem.locations }
+    let(:definitions) { [{ locations: [1, 2] }, { locations: [3, 4] }] }
+    it { is_expected.to eql [1, 2, 3, 4] }
+  end
 
-    it { is_expected.to be gem }
+  describe '#params' do
+    context 'primary group' do
+      subject(:params) { gem.params }
+      let(:definitions) do
+        [
+          { group: nil, params: { a: 1 } },
+          { group: :development, params: { b: 1 } }
+        ]
+      end
 
-    it 'updates #locations' do
-      gem.update(locations: [1])
-      expect(gem.locations).to eql [1]
+      it { is_expected.to eql(a: 1) }
     end
 
-    it 'updates #params' do
-      gem.update(params: { require: false })
-      expect(gem.params).to eql(require: false)
+    context 'development group' do
+      subject(:params) { gem.params }
+      let(:definitions) do
+        [
+          { group: :development, params: { a: 1 } },
+          { group: :test, params: { b: 1 } }
+        ]
+      end
+
+      it { is_expected.to eql(a: 1) }
+    end
+
+    context 'any group (use last definition)' do
+      subject(:params) { gem.params }
+      let(:definitions) do
+        [
+          { group: :test, params: { b: 1 } },
+          { group: :production, params: { a: 1 } }
+        ]
+      end
+
+      it { is_expected.to eql(a: 1) }
     end
   end
 end
