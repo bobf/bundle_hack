@@ -23,7 +23,8 @@ module BundleHack
     private
 
     def locate_gems(parser)
-      # TODO: Read from .bundle_hack.yml
+      # TODO: Read from .bundle_hack.yml so we can hack more than one gem at
+      # once.
       [@gem_name].map { |gem_name| locate_gem(gem_name, parser) }
     end
 

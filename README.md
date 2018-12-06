@@ -6,19 +6,9 @@ All changes are made local to your bundle and very little magic is used.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'bundle_hack'
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install bundle_hack
+bundler plugin install bundle_hack
+```
 
 ## Usage
 

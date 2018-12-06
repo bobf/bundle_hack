@@ -7,7 +7,7 @@ module BundleHack
     command 'hack:restore:all'
 
     def exec(command, args)
-      Sandbox.new(args.first).create if command == 'hack'
+      Sandbox.new(args.first).build if command == 'hack'
     end
   end
 end
